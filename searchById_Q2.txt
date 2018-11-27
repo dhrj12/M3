@@ -1,0 +1,35 @@
+@model Qn2.Akh_161757_Employee
+
+@{
+    ViewBag.Title = "SearchById";
+}
+
+<h2>SearchById</h2>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Employee_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Employee_Id, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Employee_Id, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-actions no-color">
+    <input type="button" id="btndelete" value="Delete" class="btn btn-default" /> |
+
+</div>
+<table id="tblEmps" border="1"></table>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $('#btndelete').click(function () {
+        $.ajax({
+            type: 'get',
+            url: 'http://localhost:52812/api/Akh_161757_Employee/' + $("#Employee_Id").val().trim(),
+            dataType: 'json',
+            success: function (d) {
+                alert("Successed : " + d);
+                $('#tblEmps').append("<tr>" + "Employee_Id" + "Employee_Name" + "Salary" + "Place" + "</tr>" + "<tr>" + "<td>" + d.Employee_Id + "</td>" + "<td>"
+                    + d.Employee_Name + "</td>" + "<td>" + d.Salary + "</td>" + "<td>" + d.Place + "</td>");
+    }
+    });
+    });
+</script>
